@@ -1,6 +1,8 @@
 # Architecture Documentation
 
-This document provides a comprehensive overview of the e-commerce platform architecture, including system design, technology choices, and implementation patterns.
+This document provides a comprehensive overview of the e-commerce platform
+architecture, including system design, technology choices, and implementation
+patterns.
 
 ## 📋 Table of Contents
 
@@ -64,6 +66,7 @@ This document provides a comprehensive overview of the e-commerce platform archi
 ## 🔄 Architecture Patterns
 
 ### 1. Layered Architecture
+
 ```
 ┌─────────────────────────────────┐
 │        Presentation Layer       │ ← React Components, Pages
@@ -77,12 +80,15 @@ This document provides a comprehensive overview of the e-commerce platform archi
 ```
 
 ### 2. Domain-Driven Design (DDD)
-- **Bounded Contexts**: User Management, Product Catalog, Order Management, Payment Processing
+
+- **Bounded Contexts**: User Management, Product Catalog, Order Management,
+  Payment Processing
 - **Aggregates**: User, Product, Order, Cart
 - **Value Objects**: Money, Address, Email
 - **Domain Services**: Pricing Service, Inventory Service
 
 ### 3. CQRS (Command Query Responsibility Segregation)
+
 ```
 Commands (Write):           Queries (Read):
 ┌──────────────┐           ┌──────────────┐
@@ -101,6 +107,7 @@ Commands (Write):           Queries (Read):
 ## 💻 Technology Stack
 
 ### Frontend Stack
+
 ```typescript
 // Next.js with React 18
 {
@@ -115,6 +122,7 @@ Commands (Write):           Queries (Read):
 ```
 
 ### Backend Stack
+
 ```typescript
 // Node.js with Express
 {
@@ -130,42 +138,45 @@ Commands (Write):           Queries (Read):
 ```
 
 ### Infrastructure Stack
+
 ```yaml
 # Docker & Kubernetes
-containerization: "Docker"
-orchestration: "Kubernetes"
-reverse_proxy: "Nginx"
-monitoring: "Prometheus + Grafana"
-logging: "ELK Stack"
-ci_cd: "GitHub Actions"
-cloud: "AWS/GCP/Azure"
+containerization: 'Docker'
+orchestration: 'Kubernetes'
+reverse_proxy: 'Nginx'
+monitoring: 'Prometheus + Grafana'
+logging: 'ELK Stack'
+ci_cd: 'GitHub Actions'
+cloud: 'AWS/GCP/Azure'
 ```
 
 ## 🗄️ Database Design
 
 ### Entity Relationship Diagram
+
 ```mermaid
 erDiagram
     User ||--o{ Order : places
     User ||--o{ CartItem : has
     User ||--o{ Review : writes
     User ||--o{ Address : has
-    
+
     Product ||--o{ CartItem : contains
     Product ||--o{ OrderItem : contains
     Product ||--o{ Review : receives
     Product }|--|| Category : belongs_to
-    
+
     Order ||--o{ OrderItem : contains
     Order ||--|| Address : ships_to
     Order ||--|| Payment : has
-    
+
     Category ||--o{ Product : contains
 ```
 
 ### Database Schema
 
 #### Users Table
+
 ```sql
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -182,6 +193,7 @@ CREATE TABLE users (
 ```
 
 #### Products Table
+
 ```sql
 CREATE TABLE products (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -199,6 +211,7 @@ CREATE TABLE products (
 ```
 
 #### Orders Table
+
 ```sql
 CREATE TABLE orders (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -213,6 +226,7 @@ CREATE TABLE orders (
 ```
 
 ### Indexing Strategy
+
 ```sql
 -- Performance indexes
 CREATE INDEX idx_products_category ON products(category_id);
@@ -230,6 +244,7 @@ CREATE INDEX idx_products_search ON products USING gin(
 ## 🔌 API Design
 
 ### RESTful API Structure
+
 ```
 /api/v1/
 ├── /auth
@@ -260,6 +275,7 @@ CREATE INDEX idx_products_search ON products USING gin(
 ```
 
 ### API Response Format
+
 ```typescript
 // Success Response
 interface ApiResponse<T> {
@@ -284,24 +300,29 @@ interface ApiError {
 ```
 
 ### Authentication Flow
+
 ```typescript
 // JWT Token Structure
 interface JWTPayload {
-  sub: string;        // User ID
-  email: string;      // User email
-  role: string;       // User role
-  iat: number;        // Issued at
-  exp: number;        // Expires at
+  sub: string; // User ID
+  email: string; // User email
+  role: string; // User role
+  iat: number; // Issued at
+  exp: number; // Expires at
 }
 
 // Authentication Middleware
-const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
+const authenticateToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const token = req.headers.authorization?.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Access token required' });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JWTPayload;
     req.user = decoded;
@@ -315,6 +336,7 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
 ## ⚛️ Frontend Architecture
 
 ### Component Architecture
+
 ```
 src/
 ├── app/                    # Next.js app directory
@@ -334,6 +356,7 @@ src/
 ```
 
 ### State Management Strategy
+
 ```typescript
 // Zustand Store Example
 interface CartStore {
@@ -356,6 +379,7 @@ const useCartStore = create<CartStore>((set, get) => ({
 ```
 
 ### Data Fetching Pattern
+
 ```typescript
 // React Query Hook
 export const useProducts = (filters: ProductFilters) => {
@@ -384,6 +408,7 @@ export default async function ProductsPage({
 ## 🖥️ Backend Architecture
 
 ### Service Layer Pattern
+
 ```typescript
 // Service Interface
 interface ProductService {
@@ -403,23 +428,24 @@ export class ProductServiceImpl implements ProductService {
 
   async getAll(filters: ProductFilters): Promise<Product[]> {
     const cacheKey = `products:${JSON.stringify(filters)}`;
-    
+
     // Try cache first
     const cached = await this.cacheService.get(cacheKey);
     if (cached) return JSON.parse(cached);
 
     // Fetch from database
     const products = await this.productRepository.findMany(filters);
-    
+
     // Cache the result
     await this.cacheService.set(cacheKey, JSON.stringify(products), 300);
-    
+
     return products;
   }
 }
 ```
 
 ### Repository Pattern
+
 ```typescript
 // Repository Interface
 interface ProductRepository {
@@ -460,6 +486,7 @@ export class PrismaProductRepository implements ProductRepository {
 ## 🔒 Security Architecture
 
 ### Authentication & Authorization
+
 ```typescript
 // Role-Based Access Control
 enum UserRole {
@@ -478,7 +505,8 @@ const requireRole = (roles: UserRole[]) => {
 };
 
 // Usage
-app.delete('/api/products/:id', 
+app.delete(
+  '/api/products/:id',
   authenticateToken,
   requireRole([UserRole.ADMIN]),
   productController.delete
@@ -486,6 +514,7 @@ app.delete('/api/products/:id',
 ```
 
 ### Input Validation
+
 ```typescript
 // Zod Schema Example
 const createProductSchema = z.object({
@@ -516,28 +545,32 @@ const validateBody = (schema: z.ZodSchema) => {
 ```
 
 ### Security Headers
+
 ```typescript
 // Security Middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrc: ["'self'"],
+        imgSrc: ["'self'", 'data:', 'https:'],
+      },
     },
-  },
-  hsts: {
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true,
-  },
-}));
+    hsts: {
+      maxAge: 31536000,
+      includeSubDomains: true,
+      preload: true,
+    },
+  })
+);
 ```
 
 ## 🚀 Deployment Architecture
 
 ### Container Strategy
+
 ```dockerfile
 # Multi-stage Dockerfile
 FROM node:18-alpine AS base
@@ -559,6 +592,7 @@ CMD ["npm", "start"]
 ```
 
 ### Kubernetes Deployment
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -575,19 +609,20 @@ spec:
         app: ecommerce-api
     spec:
       containers:
-      - name: api
-        image: ecommerce/api:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: url
+        - name: api
+          image: ecommerce/api:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: url
 ```
 
 ### CI/CD Pipeline
+
 ```yaml
 # GitHub Actions Workflow
 name: Deploy to Production
@@ -626,6 +661,7 @@ jobs:
 ## ⚡ Performance Considerations
 
 ### Caching Strategy
+
 ```typescript
 // Multi-level Caching
 interface CacheStrategy {
@@ -643,20 +679,21 @@ class CacheService {
     ttl: number = 300
   ): Promise<T> {
     const cached = await this.redis.get(key);
-    
+
     if (cached) {
       return JSON.parse(cached);
     }
-    
+
     const result = await factory();
     await this.redis.setex(key, ttl, JSON.stringify(result));
-    
+
     return result;
   }
 }
 ```
 
 ### Database Optimization
+
 ```sql
 -- Query Optimization Examples
 
@@ -671,7 +708,7 @@ ORDER BY p.created_at DESC
 LIMIT $3 OFFSET $4;
 
 -- Efficient order statistics
-SELECT 
+SELECT
   DATE_TRUNC('day', created_at) as date,
   COUNT(*) as order_count,
   SUM(total_amount) as revenue
@@ -682,6 +719,7 @@ ORDER BY date;
 ```
 
 ### Frontend Performance
+
 ```typescript
 // Code Splitting
 const ProductPage = lazy(() => import('./pages/ProductPage'));
@@ -716,6 +754,7 @@ const VirtualizedProductList = ({ products }: { products: Product[] }) => (
 ## 📊 Monitoring & Observability
 
 ### Metrics Collection
+
 ```typescript
 // Application Metrics
 const prometheus = require('prom-client');
@@ -740,6 +779,7 @@ const orderMetrics = {
 ```
 
 ### Logging Strategy
+
 ```typescript
 // Structured Logging
 import winston from 'winston';
@@ -752,7 +792,7 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'app.log' })
+    new winston.transports.File({ filename: 'app.log' }),
   ],
 });
 
@@ -765,4 +805,6 @@ logger.info('Order created', {
 });
 ```
 
-This architecture provides a solid foundation for building a scalable, maintainable, and performant e-commerce platform while following modern best practices and design patterns.
+This architecture provides a solid foundation for building a scalable,
+maintainable, and performant e-commerce platform while following modern best
+practices and design patterns.

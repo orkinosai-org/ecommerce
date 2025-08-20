@@ -1,6 +1,7 @@
 # Contributing to E-Commerce Platform
 
-Thank you for your interest in contributing to our e-commerce platform! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to our e-commerce platform! This
+document provides guidelines and information for contributors.
 
 ## 📋 Table of Contents
 
@@ -15,9 +16,14 @@ Thank you for your interest in contributing to our e-commerce platform! This doc
 ## 🤝 Code of Conduct
 
 ### Our Pledge
-We are committed to providing a welcoming and inclusive experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+
+We are committed to providing a welcoming and inclusive experience for everyone,
+regardless of age, body size, disability, ethnicity, gender identity and
+expression, level of experience, nationality, personal appearance, race,
+religion, or sexual identity and orientation.
 
 ### Our Standards
+
 - Use welcoming and inclusive language
 - Be respectful of differing viewpoints and experiences
 - Gracefully accept constructive criticism
@@ -36,41 +42,45 @@ We are committed to providing a welcoming and inclusive experience for everyone,
    - Your favorite code editor (VS Code recommended)
 
 2. **Fork and Clone**
+
    ```bash
    # Fork the repository on GitHub
    # Clone your fork
    git clone https://github.com/YOUR-USERNAME/ecommerce.git
    cd ecommerce
-   
+
    # Add upstream remote
    git remote add upstream https://github.com/orkinosai-org/ecommerce.git
    ```
 
 3. **Install Dependencies**
+
    ```bash
    # Install all dependencies
    npm run install:all
-   
+
    # Or install individually
    cd backend && npm install
    cd ../frontend && npm install
    ```
 
 4. **Environment Configuration**
+
    ```bash
    # Copy environment files
    cp .env.example .env
    cp backend/.env.example backend/.env
    cp frontend/.env.example frontend/.env
-   
+
    # Configure your local environment variables
    ```
 
 5. **Database Setup**
+
    ```bash
    # Run migrations
    npm run db:migrate
-   
+
    # Seed development data
    npm run db:seed:dev
    ```
@@ -78,6 +88,7 @@ We are committed to providing a welcoming and inclusive experience for everyone,
 ## 🔄 Development Process
 
 ### Branch Strategy
+
 - `main`: Production-ready code
 - `develop`: Integration branch for features
 - `feature/`: New features (`feature/user-authentication`)
@@ -85,7 +96,9 @@ We are committed to providing a welcoming and inclusive experience for everyone,
 - `hotfix/`: Critical production fixes (`hotfix/security-patch`)
 
 ### Workflow
+
 1. **Create a Branch**
+
    ```bash
    git checkout main
    git pull upstream main
@@ -99,12 +112,14 @@ We are committed to providing a welcoming and inclusive experience for everyone,
    - Update documentation as needed
 
 3. **Commit Your Changes**
+
    ```bash
    git add .
    git commit -m "feat: add user authentication system"
    ```
 
 4. **Keep Your Branch Updated**
+
    ```bash
    git fetch upstream
    git rebase upstream/main
@@ -116,7 +131,9 @@ We are committed to providing a welcoming and inclusive experience for everyone,
    ```
 
 ### Commit Message Convention
-We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification:
+
+We follow the [Conventional Commits](https://www.conventionalcommits.org/)
+specification:
 
 ```
 <type>[optional scope]: <description>
@@ -127,6 +144,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 ```
 
 **Types:**
+
 - `feat`: New features
 - `fix`: Bug fixes
 - `docs`: Documentation changes
@@ -136,6 +154,7 @@ We follow the [Conventional Commits](https://www.conventionalcommits.org/) speci
 - `chore`: Maintenance tasks
 
 **Examples:**
+
 ```bash
 feat(auth): add OAuth2 login integration
 fix(cart): resolve quantity update bug
@@ -146,6 +165,7 @@ test(user): add user registration tests
 ## 📝 Coding Standards
 
 ### JavaScript/TypeScript
+
 - Use TypeScript for all new code
 - Follow ESLint and Prettier configurations
 - Use meaningful variable and function names
@@ -154,16 +174,17 @@ test(user): add user registration tests
 ```typescript
 // Good
 const calculateTotalPrice = (items: CartItem[]): number => {
-  return items.reduce((total, item) => total + (item.price * item.quantity), 0);
+  return items.reduce((total, item) => total + item.price * item.quantity, 0);
 };
 
 // Bad
 const calc = (x: any[]): any => {
-  return x.reduce((a, b) => a + (b.p * b.q), 0);
+  return x.reduce((a, b) => a + b.p * b.q, 0);
 };
 ```
 
 ### React Components
+
 - Use functional components with hooks
 - Follow the single responsibility principle
 - Use TypeScript interfaces for props
@@ -181,6 +202,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
 ```
 
 ### Backend Code
+
 - Use Express.js middleware pattern
 - Implement proper error handling
 - Use async/await instead of callbacks
@@ -188,7 +210,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
 
 ```typescript
 // Route handler example
-export const getProducts = async (req: Request, res: Response, next: NextFunction) => {
+export const getProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const products = await productService.getAll();
     res.json({ success: true, data: products });
@@ -199,12 +225,14 @@ export const getProducts = async (req: Request, res: Response, next: NextFunctio
 ```
 
 ### Database
+
 - Use migrations for schema changes
 - Write efficient queries
 - Implement proper indexing
 - Use transactions for complex operations
 
 ### File Organization
+
 ```
 src/
 ├── components/          # Reusable UI components
@@ -220,6 +248,7 @@ src/
 ## 🔍 Pull Request Process
 
 ### Before Submitting
+
 - [ ] Code follows project standards
 - [ ] All tests pass locally
 - [ ] New tests written for new functionality
@@ -228,25 +257,31 @@ src/
 - [ ] Branch is up to date with main
 
 ### PR Template
+
 ```markdown
 ## Description
+
 Brief description of changes made.
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Unit tests added/updated
 - [ ] Integration tests pass
 - [ ] Manual testing completed
 
 ## Screenshots (if applicable)
+
 Add screenshots for UI changes.
 
 ## Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Tests added for new functionality
@@ -254,6 +289,7 @@ Add screenshots for UI changes.
 ```
 
 ### Review Process
+
 1. **Automated Checks**: All CI checks must pass
 2. **Code Review**: At least one maintainer review required
 3. **Testing**: Manual testing for significant changes
@@ -263,7 +299,9 @@ Add screenshots for UI changes.
 ## 🐛 Issue Reporting
 
 ### Bug Reports
+
 Use our bug report template and include:
+
 - **Description**: Clear description of the bug
 - **Steps to Reproduce**: Detailed steps
 - **Expected Behavior**: What should happen
@@ -272,7 +310,9 @@ Use our bug report template and include:
 - **Screenshots**: If applicable
 
 ### Feature Requests
+
 Include:
+
 - **Problem Statement**: What problem does this solve?
 - **Proposed Solution**: Describe your solution
 - **Alternatives**: Other solutions considered
@@ -281,6 +321,7 @@ Include:
 ## 🧪 Testing Guidelines
 
 ### Test Structure
+
 ```
 tests/
 ├── unit/               # Unit tests
@@ -290,12 +331,14 @@ tests/
 ```
 
 ### Testing Requirements
+
 - **Unit Tests**: For all utility functions and services
 - **Component Tests**: For React components
 - **Integration Tests**: For API endpoints
 - **E2E Tests**: For critical user flows
 
 ### Running Tests
+
 ```bash
 # All tests
 npm test
@@ -313,13 +356,14 @@ npm run test:coverage
 ```
 
 ### Writing Tests
+
 ```typescript
 // Example unit test
 describe('calculateTotalPrice', () => {
   it('should calculate total price correctly', () => {
     const items = [
       { price: 10, quantity: 2 },
-      { price: 5, quantity: 1 }
+      { price: 5, quantity: 1 },
     ];
     expect(calculateTotalPrice(items)).toBe(25);
   });
@@ -329,12 +373,14 @@ describe('calculateTotalPrice', () => {
 ## 🎯 Performance Guidelines
 
 ### Frontend Performance
+
 - Implement code splitting and lazy loading
 - Optimize images and assets
 - Use React.memo for expensive components
 - Implement proper caching strategies
 
 ### Backend Performance
+
 - Use database indexing
 - Implement query optimization
 - Use caching for frequent requests
@@ -351,11 +397,13 @@ describe('calculateTotalPrice', () => {
 ## 📚 Documentation
 
 ### Code Documentation
+
 - Use JSDoc for functions and classes
 - Write clear README files for modules
 - Keep documentation up to date
 
 ### API Documentation
+
 - Use OpenAPI/Swagger for API docs
 - Include request/response examples
 - Document error codes and messages
@@ -370,6 +418,7 @@ describe('calculateTotalPrice', () => {
 ## 🙏 Recognition
 
 Contributors will be recognized in:
+
 - README.md contributors section
 - Release notes for significant contributions
 - Special recognition for long-term contributors

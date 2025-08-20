@@ -1,6 +1,7 @@
 # Project Structure
 
-This document outlines the recommended project structure for the E-Commerce Platform.
+This document outlines the recommended project structure for the E-Commerce
+Platform.
 
 ## 📁 Directory Overview
 
@@ -217,6 +218,7 @@ ecommerce/
 ## 📝 File Naming Conventions
 
 ### Frontend (Next.js/React)
+
 - **Components**: PascalCase (`ProductCard.tsx`)
 - **Pages**: kebab-case (`product-details.tsx`)
 - **Hooks**: camelCase starting with "use" (`useProductData.ts`)
@@ -225,6 +227,7 @@ ecommerce/
 - **Stores**: camelCase ending with "Store" (`cartStore.ts`)
 
 ### Backend (Node.js/Express)
+
 - **Controllers**: camelCase ending with "Controller" (`productController.ts`)
 - **Services**: camelCase ending with "Service" (`paymentService.ts`)
 - **Models**: PascalCase (`UserModel.ts`)
@@ -233,6 +236,7 @@ ecommerce/
 - **Utils**: camelCase (`dbUtils.ts`)
 
 ### Database
+
 - **Tables**: snake_case plural (`users`, `product_categories`)
 - **Columns**: snake_case (`first_name`, `created_at`)
 - **Indexes**: snake_case with prefix (`idx_users_email`)
@@ -241,6 +245,7 @@ ecommerce/
 ## 🏗️ Architecture Layers
 
 ### Frontend Architecture
+
 ```
 ┌─────────────────────────────────┐
 │        Presentation Layer       │ ← Pages, Components
@@ -252,6 +257,7 @@ ecommerce/
 ```
 
 ### Backend Architecture
+
 ```
 ┌─────────────────────────────────┐
 │         Route Layer             │ ← Express Routes
@@ -269,6 +275,7 @@ ecommerce/
 ## 🔧 Configuration Files
 
 ### Environment Variables Structure
+
 ```bash
 # .env.example
 # Database
@@ -310,31 +317,32 @@ BACKEND_URL=http://localhost:5000
 ```
 
 ### Package.json Scripts Structure
+
 ```json
 {
   "scripts": {
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
-    
+
     "build": "npm run build:backend && npm run build:frontend",
     "build:backend": "cd backend && npm run build",
     "build:frontend": "cd frontend && npm run build",
-    
+
     "test": "npm run test:backend && npm run test:frontend",
     "test:backend": "cd backend && npm test",
     "test:frontend": "cd frontend && npm test",
-    
+
     "lint": "npm run lint:backend && npm run lint:frontend",
     "lint:backend": "cd backend && npm run lint",
     "lint:frontend": "cd frontend && npm run lint",
-    
+
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
-    
+
     "db:migrate": "cd backend && npx prisma migrate dev",
     "db:seed": "cd backend && npx prisma db seed",
     "db:reset": "cd backend && npx prisma migrate reset",
-    
+
     "docker:build": "docker-compose build",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
@@ -345,6 +353,7 @@ BACKEND_URL=http://localhost:5000
 ## 🎯 Best Practices
 
 ### Code Organization
+
 1. **Single Responsibility**: Each file/function should have one responsibility
 2. **Consistent Naming**: Follow established naming conventions
 3. **Proper Imports**: Use absolute imports where possible
@@ -352,6 +361,7 @@ BACKEND_URL=http://localhost:5000
 5. **Error Handling**: Implement proper error boundaries and handling
 
 ### File Structure
+
 1. **Group by Feature**: Organize components by feature, not by type
 2. **Index Files**: Use index.ts files for clean imports
 3. **Separation of Concerns**: Keep business logic separate from UI
@@ -359,10 +369,12 @@ BACKEND_URL=http://localhost:5000
 5. **Shared Code**: Extract common utilities to shared directories
 
 ### Development Workflow
+
 1. **Feature Branches**: Create branches for each feature
 2. **Code Reviews**: Require reviews before merging
 3. **Testing**: Write tests for new functionality
 4. **Documentation**: Update docs with changes
 5. **Linting**: Use ESLint and Prettier for code consistency
 
-This structure provides a solid foundation for a scalable e-commerce platform that can grow with your business needs.
+This structure provides a solid foundation for a scalable e-commerce platform
+that can grow with your business needs.

@@ -1,0 +1,29 @@
+# Code Owners
+# This file defines who owns which parts of the codebase
+
+# Global ownership
+* @orkinosai-org/maintainers
+
+# Frontend
+frontend/ @orkinosai-org/frontend-team
+*.tsx @orkinosai-org/frontend-team
+*.jsx @orkinosai-org/frontend-team
+
+# Backend
+backend/ @orkinosai-org/backend-team
+*.ts @orkinosai-org/backend-team
+
+# Infrastructure
+.github/ @orkinosai-org/devops-team
+infrastructure/ @orkinosai-org/devops-team
+docker-compose.yml @orkinosai-org/devops-team
+Dockerfile* @orkinosai-org/devops-team
+
+# Documentation
+*.md @orkinosai-org/documentation-team
+docs/ @orkinosai-org/documentation-team
+
+# Configuration
+package.json @orkinosai-org/maintainers
+*.config.* @orkinosai-org/maintainers
+.env.example @orkinosai-org/maintainers
