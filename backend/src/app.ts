@@ -47,16 +47,8 @@ app.get('/health', (_req, res) => {
 });
 
 // API routes
-app.use('/api', (_req, res) => {
-  res.status(200).json({
-    message: 'E-Commerce API is running!',
-    version: '1.0.0',
-    endpoints: {
-      health: '/health',
-      api: '/api',
-    },
-  });
-});
+import routes from './routes';
+app.use('/api/v1', routes);
 
 // 404 handler
 app.use('*', (req, res) => {
