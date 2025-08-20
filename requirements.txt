@@ -1,0 +1,49 @@
+# Django E-Commerce Platform Requirements
+
+# Core Django
+Django>=4.2.0,<5.0
+djangorestframework>=3.14.0
+django-cors-headers>=4.3.0
+django-environ>=0.11.0
+
+# Database
+psycopg2-binary>=2.9.0
+dj-database-url>=2.1.0
+
+# Authentication & Security
+djangorestframework-simplejwt>=5.3.0
+django-allauth>=0.57.0
+cryptography>=41.0.0
+
+# Media & File Handling
+Pillow>=10.0.0
+django-storages>=1.14.0
+boto3>=1.28.0  # For AWS S3 integration
+
+# Background Tasks
+celery>=5.3.0
+redis>=4.6.0
+
+# API Documentation
+drf-spectacular>=0.26.0
+
+# Search
+django-elasticsearch-dsl>=7.3.0
+
+# Caching
+django-redis>=5.3.0
+
+# Payment Processing
+stripe>=6.6.0
+
+# Development dependencies (install with: pip install -r requirements-dev.txt)
+# pytest>=7.4.0
+# pytest-django>=4.5.0
+# pytest-cov>=4.1.0
+# black>=23.7.0
+# isort>=5.12.0
+# flake8>=6.0.0
+# mypy>=1.5.0
+# pre-commit>=3.4.0
+# factory-boy>=3.3.0
+# coverage>=7.3.0
