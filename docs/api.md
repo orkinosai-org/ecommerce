@@ -1,8 +1,10 @@
 # API Documentation
 
-This document provides detailed information about the E-Commerce Platform REST API.
+This document provides detailed information about the E-Commerce Platform REST
+API.
 
 ## Base URL
+
 ```
 Production: https://api.ecommerce-platform.com/v1
 Development: http://localhost:5000/api/v1
@@ -11,6 +13,7 @@ Development: http://localhost:5000/api/v1
 ## Authentication
 
 ### JWT Token Authentication
+
 All protected endpoints require a valid JWT token in the Authorization header:
 
 ```http
@@ -20,6 +23,7 @@ Authorization: Bearer <your_jwt_token>
 ### Authentication Endpoints
 
 #### Login
+
 ```http
 POST /auth/login
 Content-Type: application/json
@@ -31,6 +35,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -49,6 +54,7 @@ Content-Type: application/json
 ```
 
 #### Register
+
 ```http
 POST /auth/register
 Content-Type: application/json
@@ -62,6 +68,7 @@ Content-Type: application/json
 ```
 
 #### Refresh Token
+
 ```http
 POST /auth/refresh
 Content-Type: application/json
@@ -74,11 +81,13 @@ Content-Type: application/json
 ## Products API
 
 ### Get All Products
+
 ```http
 GET /products?page=1&limit=20&category=electronics&sort=price&order=asc
 ```
 
 **Query Parameters:**
+
 - `page` (optional): Page number (default: 1)
 - `limit` (optional): Items per page (default: 20, max: 100)
 - `category` (optional): Filter by category ID
@@ -89,6 +98,7 @@ GET /products?page=1&limit=20&category=electronics&sort=price&order=asc
 - `maxPrice` (optional): Maximum price filter
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -126,11 +136,13 @@ GET /products?page=1&limit=20&category=electronics&sort=price&order=asc
 ```
 
 ### Get Product by ID
+
 ```http
 GET /products/{productId}
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -144,9 +156,7 @@ GET /products/{productId}
       "name": "Electronics"
     },
     "stockQuantity": 50,
-    "images": [
-      "https://example.com/images/headphones-1.jpg"
-    ],
+    "images": ["https://example.com/images/headphones-1.jpg"],
     "sku": "WH-001",
     "specifications": {
       "battery": "30 hours",
@@ -173,6 +183,7 @@ GET /products/{productId}
 ```
 
 ### Create Product (Admin Only)
+
 ```http
 POST /products
 Authorization: Bearer <admin_token>
@@ -198,11 +209,13 @@ Content-Type: application/json
 ## Categories API
 
 ### Get All Categories
+
 ```http
 GET /categories
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -229,12 +242,14 @@ GET /categories
 ## Cart API
 
 ### Get User Cart
+
 ```http
 GET /cart
 Authorization: Bearer <user_token>
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -264,6 +279,7 @@ Authorization: Bearer <user_token>
 ```
 
 ### Add Item to Cart
+
 ```http
 POST /cart/items
 Authorization: Bearer <user_token>
@@ -276,6 +292,7 @@ Content-Type: application/json
 ```
 
 ### Update Cart Item
+
 ```http
 PUT /cart/items/{itemId}
 Authorization: Bearer <user_token>
@@ -287,6 +304,7 @@ Content-Type: application/json
 ```
 
 ### Remove Item from Cart
+
 ```http
 DELETE /cart/items/{itemId}
 Authorization: Bearer <user_token>
@@ -295,17 +313,20 @@ Authorization: Bearer <user_token>
 ## Orders API
 
 ### Get User Orders
+
 ```http
 GET /orders?page=1&limit=10&status=completed
 Authorization: Bearer <user_token>
 ```
 
 **Query Parameters:**
+
 - `page` (optional): Page number
 - `limit` (optional): Items per page
 - `status` (optional): Filter by order status
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -355,6 +376,7 @@ Authorization: Bearer <user_token>
 ```
 
 ### Create Order
+
 ```http
 POST /orders
 Authorization: Bearer <user_token>
@@ -387,6 +409,7 @@ Content-Type: application/json
 ```
 
 ### Get Order by ID
+
 ```http
 GET /orders/{orderId}
 Authorization: Bearer <user_token>
@@ -395,12 +418,14 @@ Authorization: Bearer <user_token>
 ## User API
 
 ### Get User Profile
+
 ```http
 GET /users/profile
 Authorization: Bearer <user_token>
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -432,6 +457,7 @@ Authorization: Bearer <user_token>
 ```
 
 ### Update User Profile
+
 ```http
 PUT /users/profile
 Authorization: Bearer <user_token>
@@ -447,11 +473,13 @@ Content-Type: application/json
 ## Reviews API
 
 ### Get Product Reviews
+
 ```http
 GET /products/{productId}/reviews?page=1&limit=10&sort=rating&order=desc
 ```
 
 ### Create Review
+
 ```http
 POST /products/{productId}/reviews
 Authorization: Bearer <user_token>
@@ -469,11 +497,13 @@ Content-Type: application/json
 ## Search API
 
 ### Search Products
+
 ```http
 GET /search?q=wireless headphones&category=electronics&page=1&limit=20
 ```
 
 **Query Parameters:**
+
 - `q`: Search query
 - `category` (optional): Filter by category
 - `minPrice` (optional): Minimum price
@@ -486,6 +516,7 @@ GET /search?q=wireless headphones&category=electronics&page=1&limit=20
 ## Error Handling
 
 ### Error Response Format
+
 ```json
 {
   "success": false,
@@ -503,6 +534,7 @@ GET /search?q=wireless headphones&category=electronics&page=1&limit=20
 ```
 
 ### Common Error Codes
+
 - `VALIDATION_ERROR` (400): Invalid input data
 - `UNAUTHORIZED` (401): Invalid or missing authentication
 - `FORBIDDEN` (403): Insufficient permissions
@@ -514,11 +546,13 @@ GET /search?q=wireless headphones&category=electronics&page=1&limit=20
 ## Rate Limiting
 
 API endpoints are rate limited to prevent abuse:
+
 - **Authentication endpoints**: 5 requests per minute per IP
 - **General API**: 100 requests per minute per authenticated user
 - **Search API**: 50 requests per minute per IP
 
 Rate limit headers are included in responses:
+
 ```http
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
@@ -528,6 +562,7 @@ X-RateLimit-Reset: 1640995200
 ## Webhooks
 
 ### Order Status Updates
+
 Webhook events are sent when order status changes:
 
 ```json
@@ -543,6 +578,7 @@ Webhook events are sent when order status changes:
 ```
 
 ### Payment Events
+
 ```json
 {
   "event": "payment.completed",
@@ -559,6 +595,7 @@ Webhook events are sent when order status changes:
 ## SDKs and Libraries
 
 ### JavaScript/Node.js
+
 ```bash
 npm install @ecommerce/api-client
 ```
@@ -568,7 +605,7 @@ import { EcommerceAPI } from '@ecommerce/api-client';
 
 const api = new EcommerceAPI({
   baseURL: 'https://api.ecommerce-platform.com/v1',
-  apiKey: 'your-api-key'
+  apiKey: 'your-api-key',
 });
 
 const products = await api.products.getAll({ page: 1, limit: 20 });
@@ -577,13 +614,16 @@ const products = await api.products.getAll({ page: 1, limit: 20 });
 ## Postman Collection
 
 Import our Postman collection for easy API testing:
+
 - [Download Collection](./postman-collection.json)
 - Environment variables included for development and production
 
 ## OpenAPI Specification
 
 The complete OpenAPI 3.0 specification is available at:
+
 - Development: http://localhost:5000/api-docs
 - Production: https://api.ecommerce-platform.com/docs
 
-For questions or support, please contact our API team or create an issue in the GitHub repository.
+For questions or support, please contact our API team or create an issue in the
+GitHub repository.
