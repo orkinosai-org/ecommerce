@@ -221,11 +221,13 @@ npm test -- --testPathPattern=user.test.js
 
 ## 📚 Documentation
 
+- [Feature Requirements Specification](./docs/feature-requirements.md)
 - [API Documentation](./docs/api.md)
 - [Architecture Guide](./ARCHITECTURE.md)
 - [Contributing Guidelines](./CONTRIBUTING.md)
 - [Deployment Guide](./docs/deployment.md)
 - [Security Guidelines](./docs/security.md)
+- [Project Structure](./docs/project-structure.md)
 
 ## 🤝 Contributing
 
